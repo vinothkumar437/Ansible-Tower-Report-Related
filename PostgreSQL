@@ -1,0 +1,164 @@
+[root@awx awxcompose]#
+[root@awx awxcompose]# docker exec -it 4f75d9f69378 bash
+root@4f75d9f69378:/#
+root@4f75d9f69378:/#
+
+username and password
+----------------------------------
+pg_username=awx
+pg_password=awxpass
+pg_database=awx
+pg_port=5432
+
+General options:
+  -c, --command=COMMAND    run only single command (SQL or internal) and exit
+  -d, --dbname=DBNAME      database name to connect to (default: "root")
+  -f, --file=FILENAME      execute commands from file, then exit
+  -l, --list               list available databases, then exit
+  -v, --set=, --variable=NAME=VALUE
+                           set psql variable NAME to VALUE
+                           (e.g., -v ON_ERROR_STOP=1)
+  -V, --version            output version information, then exit
+  -X, --no-psqlrc          do not read startup file (~/.psqlrc)
+  -1 ("one"), --single-transaction
+                           execute as a single transaction (if non-interactive)
+  -?, --help[=options]     show this help, then exit
+      --help=commands      list backslash commands, then exit
+      --help=variables     list special variables, then exit
+
+Connection options:
+  -h, --host=HOSTNAME      database server host or socket directory (default: "local socket")
+  -p, --port=PORT          database server port (default: "5432")
+  -U, --username=USERNAME  database user name (default: "root")
+  -w, --no-password        never prompt for password
+  -W, --password           force password prompt (should happen automatically)
+
+
+root@4f75d9f69378:/#
+root@4f75d9f69378:/#
+root@4f75d9f69378:/#
+root@4f75d9f69378:/# psql -U awx -d awx -W
+Password for user awx:
+psql (9.6.14)
+Type "help" for help.
+
+awx=#
+awx=# help
+You are using psql, the command-line interface to PostgreSQL.
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+awx=#
+awx=#
+awx=#
+awx=#
+awx=# \d
+                                     List of relations
+ Schema |                             Name                              |   Type   | Owner
+--------+---------------------------------------------------------------+----------+-------
+ public | auth_group                                                    | table    | awx
+ public | auth_group_id_seq                                             | sequence | awx
+ public | auth_group_permissions                                        | table    | awx
+ public | auth_group_permissions_id_seq                                 | sequence | awx
+ public | auth_permission                                               | table    | awx
+ public | auth_permission_id_seq                                        | sequence | awx
+ public | auth_user                                                     | table    | awx
+ public | auth_user_groups                                              | table    | awx
+ public | auth_user_groups_id_seq                                       | sequence | awx
+ public | auth_user_id_seq                                              | sequence | awx
+ public | auth_user_user_permissions                                    | table    | awx
+ public | auth_user_user_permissions_id_seq                             | sequence | awx
+ public | conf_setting                                                  | table    | awx
+ public | conf_setting_id_seq                                           | sequence | awx
+ public | django_content_type                                           | table    | awx
+ public | django_content_type_id_seq                                    | sequence | awx
+ 
+awx=#
+awx=#
+awx=# select * from main_organization;
+ id | created | modified | description | name | created_by_id | modified_by_id | admin_role_id | auditor_role_id | member_role_id | re
+ad_role_id | custom_virtualenv | execute_role_id | job_template_admin_role_id | credential_admin_role_id | inventory_admin_role_id | p
+roject_admin_role_id | workflow_admin_role_id | notification_admin_role_id | max_hosts
+----+---------+----------+-------------+------+---------------+----------------+---------------+-----------------+----------------+---
+-----------+-------------------+-----------------+----------------------------+--------------------------+-------------------------+--
+---------------------+------------------------+----------------------------+-----------
+(0 rows)
+
+awx=#
+awx=#
+awx=#
+awx=# select name from main_organization;
+ name
+-------
+ Park4
+(1 row)
+
+awx=#
+awx=# select name as org from main_organization;
+  org
+-------
+ Park4
+(1 row)
+
+awx=#
+awx=#
+awx=#
+awx=#
+awx=# select * from main_inventory;
+ id | created | modified | description | name | variables | has_active_failures | total_hosts | hosts_with_active_failures | total_gro
+ups | groups_with_active_failures | has_inventory_sources | total_inventory_sources | inventory_sources_with_failures | created_by_id
+| modified_by_id | organization_id | admin_role_id | adhoc_role_id | update_role_id | use_role_id | read_role_id | host_filter | kind
+| pending_deletion | insights_credential_id
+----+---------+----------+-------------+------+-----------+---------------------+-------------+----------------------------+----------
+----+-----------------------------+-----------------------+-------------------------+---------------------------------+---------------
++----------------+-----------------+---------------+---------------+----------------+-------------+--------------+-------------+------
++------------------+------------------------
+(0 rows)
+
+awx=#
+awx=#
+awx=#
+awx=#
+awx=# select * from main_inventory;
+ id |            created            |           modified           | description | name | variables | has_active_failures | total_host
+s | hosts_with_active_failures | total_groups | groups_with_active_failures | has_inventory_sources | total_inventory_sources | invent
+ory_sources_with_failures | created_by_id | modified_by_id | organization_id | admin_role_id | adhoc_role_id | update_role_id | use_ro
+le_id | read_role_id | host_filter | kind | pending_deletion | insights_credential_id
+----+-------------------------------+------------------------------+-------------+------+-----------+---------------------+-----------
+--+----------------------------+--------------+-----------------------------+-----------------------+-------------------------+-------
+--------------------------+---------------+----------------+-----------------+---------------+---------------+----------------+-------
+------+--------------+-------------+------+------------------+------------------------
+  2 | 2019-08-11 05:15:57.049663+00 | 2019-08-11 05:15:57.04968+00 |             | Demo | ---       | f                   |
+0 |                          0 |            0 |                           0 | f                     |                       0 |
+                        0 |             1 |              1 |               2 |            43 |            45 |             44 |
+   46 |           47 |             |      | f                |
+(1 row)
+
+awx=#
+awx=#
+awx=#
+awx=#
+awx=# select name from main_inventory;
+ name
+------
+ Demo
+(1 row)
+
+awx=#
+awx=#
+awx=#
+awx=#
+awx=# select * from main_host;
+ id | created | modified | description | name | enabled | instance_id | variables | has_active_failures | has_inventory_sources | crea
+ted_by_id | inventory_id | last_job_host_summary_id | modified_by_id | last_job_id | ansible_facts | ansible_facts_modified | insights
+_system_id
+----+---------+----------+-------------+------+---------+-------------+-----------+---------------------+-----------------------+-----
+----------+--------------+--------------------------+----------------+-------------+---------------+------------------------+---------
+-----------
+(0 rows)
+
+awx=#
+awx=#
+awx=#
