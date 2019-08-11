@@ -1,0 +1,103 @@
+select ansible_facts->>'ansible_kernel' AS kernel,
+    ansible_facts->>'ansible_distribution_release' AS release,
+	ansible_facts->>'ansible_distribution_version' AS version,
+	ansible_facts->>'ansible_processor_vcpus' as cpus,
+	ansible_facts->>'ansible_memtotal_mb' as ram,
+	ansible_facts->>'ansible_hostname' AS hostname,
+	ansible_facts->'ansible_local'->'cpu'->>'Cpu_Usage' AS cpu_usage,
+	ansible_facts->'ansible_local'->'last'->>'last_login' AS login_first_user,
+	ansible_facts->'ansible_local'->'last1'->>'last_login1' AS login_second_user,
+	ansible_facts->'ansible_local'->'last2'->>'last_login2' AS login_third_user,
+	ansible_facts->'ansible_local'->'last3'->>'last_login3' AS login_fourth_user,
+	ansible_facts->'ansible_local'->'last4'->>'last_login4' AS login_fifth_user,
+	ansible_facts->'ansible_local'->'last5'->>'last_login5' AS login_sixth_user,
+	ansible_facts->'ansible_local'->'process'->>'process_count' AS process_count,
+	ansible_facts->'ansible_local'->'memory_in_use'->>'memory_in_use' AS Memory_In_Use,
+	ansible_facts->'ansible_local'->'free_memory'->>'free_memory' AS Free_Memory,
+	ansible_facts->'ansible_local'->'memory_in_buffer'->>'memory_in_buffer' AS Memory_In_Buffer,
+	ansible_facts->'ansible_all_ipv4_addresses'->>0 AS IP_Address
+    from main_host;
+	
+
+
+select ansible_facts->>'ansible_kernel' AS kernel,
+    ansible_facts->>'ansible_distribution_release' AS release,
+	ansible_facts->>'ansible_distribution_version' AS version,
+	ansible_facts->>'ansible_processor_vcpus' as cpus,
+	ansible_facts->>'ansible_memtotal_mb' as ram,
+	ansible_facts->>'ansible_hostname' AS hostname,
+	ansible_facts->'ansible_all_ipv4_addresses'->>0 AS IP_Address
+    from main_host;
+	
+	
+select t1.name as Organization,t2.name as Inventory,t3.name as hostname,
+t4.username as Username,t3.ansible_facts->>'ansible_kernel' AS kernel,
+t3.ansible_facts->'ansible_all_ipv4_addresses'->>0 AS IP_Address from main_organization t1
+JOIN main_inventory t2 on t1.id = t2.organization_id 
+JOIN main_host t3 on t2.id = t3.inventory_id 
+JOIN auth_user t4 on t3.created_by_id = t4.id;
+
+   <th>S.No</th>
+                <th>Organization</th>
+                <th>Inventory</th>
+                <th>Username</th>
+                <th>Hostname Added in Tower</th>
+                <th>Kernel</th>
+                <th>Release</th>
+                <th>Version</th>
+                <th>CPU</th>
+                <th>CPU Usage</th>
+                <th>Memory(RAM)</th>
+                <th>Memory in Use</th>
+                <th>Free Memory</th>
+                <th>Memory in Buffer</th>
+                <th>Last Login User One</th>
+                <th>Last Login User Two</th>
+                <th>Last Login User Three</th>
+                <th>Last Login User Four</th>
+                <th>Last Login User Fifth</th>
+                <th>Last Login User Sixth</th>
+                <th>IP Address</th>
+
+
+                <td><?php echo ++$i;?></td>
+                <td><?php echo $row['organization'];?></td>
+                <td><?php echo $row['inventory'];?></td>
+                <td><?php echo $row['username'];?></td>
+                <td><?php echo $row['hostname'];?></td>
+                <td><?php echo $row['kernel'];?></td>
+                <td><?php echo $row['release'];?></td>
+                <td><?php echo $row['version'];?></td>
+                <td><?php echo $row['cpu'];?></td>
+                <td><?php echo $row['cpu_usage'];?></td>
+                <td><?php echo $row['memory'];?></td>
+                <td><?php echo $row['memory_in_use'];?></td>
+                <td><?php echo $row['free_memory'];?></td>
+                <td><?php echo $row['memory_in_buffer'];?></td>
+                <td><?php echo $row['last_login'];?></td>
+                <td><?php echo $row['last_login1'];?></td>
+                <td><?php echo $row['last_login2'];?></td>
+                <td><?php echo $row['last_login3'];?></td>
+                <td><?php echo $row['last_login4'];?></td>
+                <td><?php echo $row['last_login5'];?></td>
+                <td><?php echo $row['ipaddress'];?></td>
+
+t3.ansible_facts->>'ansible_os_family' AS family,
+t3.ansible_facts->>'ansible_distribution_release' AS release,
+t3.ansible_facts->>'ansible_distribution_version' AS version,
+t3.ansible_facts->>'ansible_processor_vcpus' as cpus,
+t3.ansible_facts->'ansible_local'->'cpu'->'Cpu_Usage' AS cpu_usage,
+t3.ansible_facts->'ansible_local'->'process'->>'process_count' AS process_count,
+t3.ansible_facts->>'ansible_memtotal_mb' as memory,
+t3.ansible_facts->'ansible_local'->'memory_in_use'->>'memory_in_use' AS memory_in_use,
+t3.ansible_facts->'ansible_local'->'free_memory'->>'free_memory' AS free_memory,
+t3.ansible_facts->'ansible_local'->'memory_in_buffer'->>'memory_in_buffer' AS memory_in_buffer,
+t3.ansible_facts->'facter_system_uptime'->>'days' AS days,
+t3.ansible_facts->'ansible_mounts'->0->>'size_total' AS total,
+t3.ansible_facts->'ansible_mounts'->0->>'size_available' AS available,
+t3.ansible_facts->'ansible_local'->'last'->>'last_login' AS last_login,
+t3.ansible_facts->'ansible_local'->'last1'->>'last_login1' AS last_login1,
+t3.ansible_facts->'ansible_local'->'last2'->>'last_login2' AS last_login2,
+t3.ansible_facts->'ansible_local'->'last3'->>'last_login3' AS last_login3,
+t3.ansible_facts->'ansible_local'->'last4'->>'last_login4' AS last_login4,
+t3.ansible_facts->'ansible_local'->'last5'->>'last_login5' AS last_login5
