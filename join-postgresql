@@ -1,0 +1,31 @@
+
+awx=# select id,name from main_organization;
+ id | name
+----+-------
+  2 | Park4
+
+awx=# select name,organization_id from main_inventory;
+ name | organization_id
+------+-----------------
+ Demo |               2
+(1 row)
+
+awx=# select t1.name as organization, t2.name inventory from main_organization t1 JOIN main_inventory t2 on t1.id = t2.organization_id;
+ organization | inventory
+--------------+-----------
+ Park4        | Demo
+(1 row)
+
+awx=#
+
+awx=# select id,name,organization_id from main_inventory;
+ id | name | organization_id
+----+------+-----------------
+  3 | Demo |               2
+(1 row)
+
+awx=#
+
+
+
+select t1.name as organization, t2.name inventory from main_organization t1 JOIN main_inventory t2 on t1.id = t2.organization_id;
